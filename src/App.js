@@ -49,9 +49,6 @@ const App = () => {
         <div>
           <ImageCanvas ref={mainCanvasRef} texts={texts} />
         </div>
-        <div className="right-buttons-container">
-          <FileTab exportImage={exportImage} printImage={printImage} />
-        </div>
       </div>
     </div>
   );
