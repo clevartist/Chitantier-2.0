@@ -1,0 +1,78 @@
+body {
+  background-color: #ece9dd;
+  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+    "Lucida Sans", Arial, sans-serif;
+  padding-left: 30px;
+  padding-right: 30px;
+}
+
+.main-container {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  align-items: flex-start;
+}
+
+.form-container {
+  background-color: white;
+  padding: 26px;
+  font-family: "arial";
+  font-size: 16px;
+  color: "white";
+  border-radius: 18px;
+  box-shadow: 0px 5px 10px #d7d5b4;
+}
+
+.right-buttons-container {
+  background-color: white;
+  padding: 10px;
+  border-radius: 18px;
+  box-shadow: 0px 5px 10px #d7d5b4;
+  text-align: center;
+}
+
+.primenit {
+  background-color: #2be87c;
+  border: none;
+  padding: 14px;
+  width: 100%;
+  font-weight: bold;
+  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+    "Lucida Sans", Arial, sans-serif;
+  border-radius: 10px;
+  box-shadow: 0px 4px #20a85b;
+}
+
+.new-chitanta {
+  width: 100%;
+  background-color: #bababa;
+  border: none;
+  padding: 14px;
+  margin-top: 10px;
+  font-weight: bold;
+  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+    "Lucida Sans", Arial, sans-serif;
+  border-radius: 10px;
+  box-shadow: 0px 4px #9f9f9f;
+}
+
+.a4 {
+  width: 100%;
+  text-align: center;
+}
+
+.chitanta {
+  width: 75%;
+  height: auto;
+  margin-bottom: 20px;
+}
+
+.valutaButton {
+  width: 33.33%;
+  border: none;
+  padding: 8px;
+  font-weight: bold;
+  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+    "Lucida Sans", Arial, sans-serif;
+  border-radius: 10px;
+}
