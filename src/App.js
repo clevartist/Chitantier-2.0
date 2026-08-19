@@ -2,7 +2,6 @@
 import React, { useState, useRef } from "react";
 import TextForm from "./components/TextForm";
 import ImageCanvas from "./components/ImageCanvas";
-import FileTab from "./components/FileTab";
 import "./styles.css";
 import { useReactToPrint } from "react-to-print";
 
