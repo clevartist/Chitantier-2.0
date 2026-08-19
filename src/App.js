@@ -1,5 +1,5 @@
 // src/App.js
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import TextForm from "./components/TextForm";
 import ImageCanvas from "./components/ImageCanvas";
 import "./styles.css";
@@ -23,9 +23,15 @@ const App = () => {
   const [textsList, setTextsList] = useState([emptyTexts()]);
   const [chitanta2, setChitanta2] = useState(false);
   const [chitanta3, setChitanta3] = useState(false);
+  const [darkMode, setDarkMode] = useState(false);
   const mainCanvasRef = useRef(null);
 
   const activeCount = 1 + (chitanta2 ? 1 : 0) + (chitanta3 ? 1 : 0);
+
+  // toggle a `dark` class on <body> so CSS variables in styles.css take over
+  useEffect(() => {
+    document.body.classList.toggle("dark", darkMode);
+  }, [darkMode]);
 
   const toggleChitanta2 = () => {
     setChitanta2((prev) => {
@@ -87,6 +93,16 @@ const App = () => {
   return (
     <div>
       <h1>Editor de Chitante pentru Mama ♥</h1>
+
+      <label className="dark-mode-toggle">
+        <input
+          type="checkbox"
+          checked={darkMode}
+          onChange={() => setDarkMode((prev) => !prev)}
+        />
+        Mod întunecat
+      </label>
+
       <div className="main-container">
         <div className="forms-row">
           <div className="form-container">
