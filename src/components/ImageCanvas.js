@@ -7,26 +7,22 @@ const ImageCanvas = forwardRef(({ texts }, mainCanvasRef) => {
 
   const canvases = [
     { rect: [0, 0, 1748, 982], bg: negru },
-    { rect: [0, 1263, 1748, 982], bg: negru },
-    { rect: [0, 2524, 1748, 982], bg: negru },
+    { rect: [0, 982, 1748, 982], bg: negru },
+    { rect: [0, 1964, 1748, 982], bg: negru },
   ];
 
   useEffect(() => {
     const mainCanvas = mainCanvasRef.current;
     const mainCTX = mainCanvas.getContext("2d");
 
-    mainCTX.clearRect(0, 0, mainCanvas.width, mainCanvas.height);
+    mainCTX.fillStyle = "white";
+    mainCTX.fillRect(0, 0, mainCanvas.width, mainCanvas.height);
 
     canvases.forEach((config, index) => {
       const subCanvas = subCanvasRefs.current[index];
       const subCTX = subCanvas.getContext("2d");
 
-      subCTX.clearRect(
-        config.rect[0],
-        config.rect[1],
-        config.rect[2],
-        config.rect[3]
-      );
+      subCTX.clearRect(0, 0, config.rect[2], config.rect[3]);
 
       const backgroundImage = new Image();
       backgroundImage.crossOrigin = "anonymous";
