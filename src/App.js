@@ -88,7 +88,7 @@ const App = () => {
     <div>
       <h1>Editor de Chitante pentru Mama ♥</h1>
       <div className="main-container">
-        <div>
+        <div className="forms-row">
           <div className="form-container">
             <div className="chitanta-toggles">
               <label className="chitanta-checkbox">
@@ -110,29 +110,43 @@ const App = () => {
               </label>
             </div>
 
-            {textsList.map((texts, index) => (
-              <div key={index} className="chitanta-form-block">
-                {index > 0 && <hr className="form-divider" />}
-                <TextForm
-                  formLabel={`Chitanța ${index + 1}`}
-                  initialTexts={texts}
-                  onTextsChange={onTextsChangeAt(index)}
-                />
-              </div>
-            ))}
-
-            <br />
-            <button type="button" className="primenit" onClick={exportImage}>
-              Salvează
-            </button>
+            <TextForm
+              formLabel="Chitanța 1"
+              initialTexts={textsList[0]}
+              onTextsChange={onTextsChangeAt(0)}
+            />
           </div>
+
+          {chitanta2 && (
+            <div className="form-container">
+              <TextForm
+                formLabel="Chitanța 2"
+                initialTexts={textsList[1]}
+                onTextsChange={onTextsChangeAt(1)}
+              />
+            </div>
+          )}
+
+          {chitanta3 && (
+            <div className="form-container">
+              <TextForm
+                formLabel="Chitanța 3"
+                initialTexts={textsList[2]}
+                onTextsChange={onTextsChangeAt(2)}
+              />
+            </div>
+          )}
         </div>
-        <div>
+
+        <div className="preview-column">
           <ImageCanvas
             ref={mainCanvasRef}
             textsList={textsList}
             activeCount={activeCount}
           />
+          <button type="button" className="primenit" onClick={exportImage}>
+            Salvează
+          </button>
         </div>
       </div>
     </div>
