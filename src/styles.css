@@ -12,6 +12,7 @@
   --new-chitanta-bg: #bababa;
   --new-chitanta-shadow: #9f9f9f;
   --primenit-bg: #2be87c;
+  --primenit-bg-active: #1fae5c; /* darker green for click */
   --heading-color: #1a1a1a;
 }
 
@@ -29,6 +30,7 @@ body.dark {
   --new-chitanta-bg: #2c2f36;
   --new-chitanta-shadow: #16181c;
   --primenit-bg: #23c26b;
+  --primenit-bg-active: #17914f; /* darker green for click, dark mode */
   --heading-color: #f2f2f2;
 }
 
@@ -133,6 +135,11 @@ h1 {
   font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
     "Lucida Sans", Arial, sans-serif;
   border-radius: 10px;
+  transition: background-color 0.1s ease;
+}
+
+.primenit:active {
+  background-color: var(--primenit-bg-active);
 }
 
 .new-chitanta {
