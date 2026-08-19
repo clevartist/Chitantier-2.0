@@ -17,6 +17,9 @@ const emptyTexts = () => [
   { title: "Reprezentând", text: "", x: 490, y: 890, scale: "38px Arial" },
 ];
 
+// deep-ish clone of a texts array so editing chitanta 2/3 never mutates chitanta 1's objects
+const cloneTexts = (texts) => texts.map((obj) => ({ ...obj }));
+
 const App = () => {
   // one entry per active chitanță (always at least 1)
   const [textsList, setTextsList] = useState([emptyTexts()]);
@@ -24,6 +27,10 @@ const App = () => {
   const [chitanta3, setChitanta3] = useState(false);
   const [darkMode, setDarkMode] = useState(false);
   const mainCanvasRef = useRef(null);
+
+  // bump this to force TextForm (which owns its own internal state from initialTexts)
+  // to re-read initialTexts when we prefill it programmatically
+  const [formResetKey, setFormResetKey] = useState(0);
 
   const activeCount = 1 + (chitanta2 ? 1 : 0) + (chitanta3 ? 1 : 0);
 
@@ -36,6 +43,7 @@ const App = () => {
     setChitanta2((prev) => {
       const next = !prev;
       setTextsList((list) => syncListLength(list, next, chitanta3));
+      if (next) setFormResetKey((k) => k + 1);
       return next;
     });
   };
@@ -44,15 +52,21 @@ const App = () => {
     setChitanta3((prev) => {
       const next = !prev;
       setTextsList((list) => syncListLength(list, chitanta2, next));
+      if (next) setFormResetKey((k) => k + 1);
       return next;
     });
   };
 
-  // keeps textsList length in sync with how many chitanțe are checked
+  // keeps textsList length in sync with how many chitanțe are checked.
+  // newly added slots are pre-filled with a clone of chitanta 1's current data,
+  // instead of a blank emptyTexts(), so the user only edits the differences.
   const syncListLength = (list, c2, c3) => {
     const count = 1 + (c2 ? 1 : 0) + (c3 ? 1 : 0);
     const next = [...list];
-    while (next.length < count) next.push(emptyTexts());
+    while (next.length < count) {
+      const base = next[0] ? cloneTexts(next[0]) : emptyTexts();
+      next.push(base);
+    }
     while (next.length > count) next.pop();
     return next;
   };
@@ -125,6 +139,7 @@ const App = () => {
           {chitanta2 && (
             <div className="form-container">
               <TextForm
+                key={`c2-${formResetKey}`}
                 formLabel="Chitanța 2"
                 initialTexts={textsList[1]}
                 onTextsChange={onTextsChangeAt(1)}
@@ -135,6 +150,7 @@ const App = () => {
           {chitanta3 && (
             <div className="form-container">
               <TextForm
+                key={`c3-${formResetKey}`}
                 formLabel="Chitanța 3"
                 initialTexts={textsList[2]}
                 onTextsChange={onTextsChangeAt(2)}
