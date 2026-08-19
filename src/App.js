@@ -3,7 +3,6 @@ import React, { useState, useRef, useEffect } from "react";
 import TextForm from "./components/TextForm";
 import ImageCanvas from "./components/ImageCanvas";
 import "./styles.css";
-import { useReactToPrint } from "react-to-print";
 
 const emptyTexts = () => [
   { title: "Nr. (ignora)", text: "", x: 1300, y: 163, scale: "30px Arial" },
@@ -79,16 +78,6 @@ const App = () => {
     link.download = `${exported_image_title}.png`;
     link.click();
   };
-
-  const printImage = useReactToPrint({
-    content: () => mainCanvasRef.current,
-    onBeforeGetContent: () => {
-      mainCanvasRef.current.style.display = "block";
-    },
-    onAfterPrint: () => {
-      mainCanvasRef.current.style.display = "none";
-    },
-  });
 
   return (
     <div>
