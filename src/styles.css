@@ -12,7 +12,6 @@
   --new-chitanta-bg: #bababa;
   --new-chitanta-shadow: #9f9f9f;
   --primenit-bg: #2be87c;
-  --primenit-shadow: #20a85b;
   --heading-color: #1a1a1a;
 }
 
@@ -30,7 +29,6 @@ body.dark {
   --new-chitanta-bg: #2c2f36;
   --new-chitanta-shadow: #16181c;
   --primenit-bg: #23c26b;
-  --primenit-shadow: #158049;
   --heading-color: #f2f2f2;
 }
 
@@ -135,7 +133,6 @@ h1 {
   font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
     "Lucida Sans", Arial, sans-serif;
   border-radius: 10px;
-  box-shadow: 0px 4px var(--primenit-shadow);
 }
 
 .new-chitanta {
