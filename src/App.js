@@ -5,20 +5,68 @@ import ImageCanvas from "./components/ImageCanvas";
 import "./styles.css";
 import { useReactToPrint } from "react-to-print";
 
+const emptyTexts = () => [
+  { title: "Nr. (ignora)", text: "", x: 1300, y: 163, scale: "30px Arial" },
+  { title: "Chitanța Nr", text: "", x: 934, y: 376, scale: "55px Arial" },
+  { title: "Data", text: "", x: 748, y: 460, scale: "40px Arial" },
+  { title: "Anul 20...", text: "", x: 1080, y: 460, scale: "40px Arial" },
+  { title: "Am primit de la", text: "", x: 490, y: 586, scale: "38px Arial" },
+  { title: "C.I.F.", text: "", x: 490, y: 660, scale: "38px Arial" },
+  { title: "Adresa", text: "", x: 490, y: 737, scale: "38px Arial" },
+  { title: "Suma de", text: "", x: 490, y: 812, scale: "38px Arial" },
+  { title: "adica", text: "", x: 996, y: 812, scale: "38px Arial" },
+  { title: "Reprezentând", text: "", x: 490, y: 890, scale: "38px Arial" },
+];
+
 const App = () => {
-  const [texts, setTexts] = useState([]);
+  // one entry per active chitanță (always at least 1)
+  const [textsList, setTextsList] = useState([emptyTexts()]);
+  const [chitanta2, setChitanta2] = useState(false);
+  const [chitanta3, setChitanta3] = useState(false);
   const mainCanvasRef = useRef(null);
 
-  const exported_image_title =
-    texts && texts.length > 0
-      ? `${texts[1].title}-${texts[1].text}`
-      : "exported-image";
+  const activeCount = 1 + (chitanta2 ? 1 : 0) + (chitanta3 ? 1 : 0);
 
-  const onTextChange = (newTexts) => {
-    setTexts(newTexts);
+  const toggleChitanta2 = () => {
+    setChitanta2((prev) => {
+      const next = !prev;
+      setTextsList((list) => syncListLength(list, next, chitanta3));
+      return next;
+    });
   };
 
-  const exportImage = () => {
+  const toggleChitanta3 = () => {
+    setChitanta3((prev) => {
+      const next = !prev;
+      setTextsList((list) => syncListLength(list, chitanta2, next));
+      return next;
+    });
+  };
+
+  // keeps textsList length in sync with how many chitanțe are checked
+  const syncListLength = (list, c2, c3) => {
+    const count = 1 + (c2 ? 1 : 0) + (c3 ? 1 : 0);
+    const next = [...list];
+    while (next.length < count) next.push(emptyTexts());
+    while (next.length > count) next.pop();
+    return next;
+  };
+
+  const onTextsChangeAt = (index) => (newTexts) => {
+    setTextsList((list) => {
+      const updated = [...list];
+      updated[index] = newTexts;
+      return updated;
+    });
+  };
+
+  const exported_image_title =
+    textsList[0] && textsList[0][1] && textsList[0][1].text
+      ? `${textsList[0][1].title}-${textsList[0][1].text}`
+      : "exported-image";
+
+  const exportImage = (e) => {
+    if (e) e.preventDefault();
     const canvas = document.getElementById("mainCanvas");
     const link = document.createElement("a");
     link.href = canvas.toDataURL("image/png");
@@ -28,11 +76,9 @@ const App = () => {
 
   const printImage = useReactToPrint({
     content: () => mainCanvasRef.current,
-
     onBeforeGetContent: () => {
       mainCanvasRef.current.style.display = "block";
     },
-
     onAfterPrint: () => {
       mainCanvasRef.current.style.display = "none";
     },
@@ -42,11 +88,51 @@ const App = () => {
     <div>
       <h1>Editor de Chitante pentru Mama ♥</h1>
       <div className="main-container">
-        <div className="form-container">
-          <TextForm onTextsChange={onTextChange} exportImage={exportImage} />
+        <div>
+          <div className="form-container">
+            <div className="chitanta-toggles">
+              <label className="chitanta-checkbox">
+                <input
+                  type="checkbox"
+                  checked={chitanta2}
+                  onChange={toggleChitanta2}
+                />
+                Chitanța 2
+              </label>
+              <label className="chitanta-checkbox">
+                <input
+                  type="checkbox"
+                  checked={chitanta3}
+                  onChange={toggleChitanta3}
+                  disabled={!chitanta2}
+                />
+                Chitanța 3
+              </label>
+            </div>
+
+            {textsList.map((texts, index) => (
+              <div key={index} className="chitanta-form-block">
+                {index > 0 && <hr className="form-divider" />}
+                <TextForm
+                  formLabel={`Chitanța ${index + 1}`}
+                  initialTexts={texts}
+                  onTextsChange={onTextsChangeAt(index)}
+                />
+              </div>
+            ))}
+
+            <br />
+            <button type="button" className="primenit" onClick={exportImage}>
+              Salvează
+            </button>
+          </div>
         </div>
         <div>
-          <ImageCanvas ref={mainCanvasRef} texts={texts} />
+          <ImageCanvas
+            ref={mainCanvasRef}
+            textsList={textsList}
+            activeCount={activeCount}
+          />
         </div>
       </div>
     </div>
