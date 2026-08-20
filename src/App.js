@@ -5,16 +5,45 @@ import ImageCanvas from "./components/ImageCanvas";
 import "./styles.css";
 
 const emptyTexts = () => [
-  { title: "Nr. (ignora)", text: "", x: 1300, y: 163, scale: "30px Arial" },
   { title: "Chitanța Nr", text: "", x: 934, y: 376, scale: "55px Arial" },
   { title: "Data", text: "", x: 748, y: 460, scale: "40px Arial" },
-  { title: "Anul 20...", text: "", x: 1080, y: 460, scale: "40px Arial" },
-  { title: "Am primit de la", text: "", x: 490, y: 586, scale: "38px Arial" },
-  { title: "C.I.F.", text: "", x: 490, y: 660, scale: "38px Arial" },
-  { title: "Adresa", text: "", x: 490, y: 737, scale: "38px Arial" },
+  {
+    title: "Anul 20...",
+    text: "26",
+    x: 1080,
+    y: 460,
+    scale: "40px Arial",
+  },
+  {
+    title: "Am primit de la",
+    text: "VP TIR TRANS SRL",
+    x: 490,
+    y: 586,
+    scale: "38px Arial",
+  },
+  {
+    title: "C.I.F.",
+    text: "10156000196476",
+    x: 490,
+    y: 660,
+    scale: "38px Arial",
+  },
+  {
+    title: "Adresa",
+    text: "RM, mun. Chisinau, s. Bacioi, str. I. Druta 15",
+    x: 490,
+    y: 737,
+    scale: "38px Arial",
+  },
   { title: "Suma de", text: "", x: 490, y: 812, scale: "38px Arial" },
   { title: "adica", text: "", x: 996, y: 812, scale: "38px Arial" },
-  { title: "Reprezentând", text: "", x: 490, y: 890, scale: "38px Arial" },
+  {
+    title: "Reprezentând",
+    text: "transport marfa com",
+    x: 490,
+    y: 890,
+    scale: "38px Arial",
+  },
 ];
 
 // deep-ish clone of a texts array so editing chitanta 2/3 never mutates chitanta 1's objects
