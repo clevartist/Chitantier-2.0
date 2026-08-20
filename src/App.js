@@ -79,10 +79,17 @@ const App = () => {
     });
   };
 
-  const exported_image_title =
-    textsList[0] && textsList[0][1] && textsList[0][1].text
-      ? `${textsList[0][1].title}-${textsList[0][1].text}`
-      : "exported-image";
+  const exported_image_title = (() => {
+    const numbers = textsList
+      .slice(0, activeCount)
+      .map((texts) => texts && texts[1] && texts[1].text)
+      .filter((text) => text && text.trim() !== "");
+
+    if (numbers.length === 0) return "exported-image";
+
+    const label = textsList[0][1].title; // "Chitanța Nr"
+    return `${label}-${numbers.join(", ")}`;
+  })();
 
   const exportImage = (e) => {
     if (e) e.preventDefault();
